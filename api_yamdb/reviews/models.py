@@ -9,7 +9,7 @@ ADMIN = 'admin'
 ROLE_CHOICES = (
     (USER, 'пользователь'),
     (MODERATOR, 'модератор'),
-    (ADMIN, 'администратор')
+    (ADMIN, 'администратор'),
 )
 
 
