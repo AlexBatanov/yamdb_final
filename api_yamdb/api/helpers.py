@@ -2,9 +2,7 @@ import random
 
 from django.conf import settings
 from django.core.mail import send_mail
-
 from reviews.models import User
-
 
 CONFIRMATION_CODE = random.randint(1000, 9999)
 

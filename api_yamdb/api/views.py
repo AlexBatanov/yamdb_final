@@ -5,21 +5,18 @@ from rest_framework import filters, permissions, status, viewsets
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_simplejwt.tokens import RefreshToken
+from reviews.models import Category, Genre, Review, Title, User
+
+from api.permissions import IsAdmin
 
 from .filters import TitleFilter
+from .helpers import get_users, send_massege
 from .mixinviewsets import CreateListDestroyMixins
 from .permissions import IsAdminOrReadOnly, IsOwnerIReadOnly
-from .serializers import (AuthSerializer,
-                          CategorySerializer,
-                          CommentSerializer,
-                          GenreSerializer,
-                          ReviewSerializer,
-                          TitleSerializerForChange,
-                          TitleSerializerForRead,
+from .serializers import (AuthSerializer, CategorySerializer,
+                          CommentSerializer, GenreSerializer, ReviewSerializer,
+                          TitleSerializerForChange, TitleSerializerForRead,
                           UsersSerializer)
-from api.permissions import IsAdmin
-from reviews.models import Category, Genre, Review, Title, User
-from .helpers import send_massege, get_users
 
 
 class CommentViewSet(viewsets.ModelViewSet):
@@ -105,7 +102,7 @@ class RegistrationView(APIView):
             send_massege(user)
 
             return Response(data=request.data, status=status.HTTP_200_OK)
-        elif (user and user.email == request.data.get('email')):
+        if (user and user.email == request.data.get('email')):
             send_massege(user)
 
             return Response(data=request.data, status=status.HTTP_200_OK)
