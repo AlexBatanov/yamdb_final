@@ -101,7 +101,7 @@ class RegistrationView(APIView):
             send_massege(user)
 
             return Response(data=request.data, status=status.HTTP_200_OK)
-        if (user and user.email == request.data.get('email')):
+        elif (user and user.email == request.data.get('email')):
             send_massege(user)
 
             return Response(data=request.data, status=status.HTTP_200_OK)
