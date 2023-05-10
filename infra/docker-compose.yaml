@@ -17,7 +17,7 @@ services:
     image: alexandrbatanov/yamdb_final:latest
     restart: always
     volumes:
-      - ./static_volume:/code/static
+      - ./static_volume:/app/static
     depends_on:
       - db
     env_file:
