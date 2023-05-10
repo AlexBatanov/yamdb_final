@@ -1,39 +1,35 @@
 version: '3.8'
 
 volumes:
-  static_value:
-  media_value:
+  postgres_data:
+  static_volume:
 
 services:
+
   db:
-    image: postgres:13.0-alpine
+    image: postgres:13.0
     restart: always
     volumes:
-      - /var/lib/postgresql/data/
+      - postgres_data:/var/lib/postgresql/data/
     env_file:
       - ./.env
-  web:
-    build: ../api_yamdb/
-    image: alexandrbatanov/yamdb_final
+  yamdb:
+    image: alexandrbatanov/yamdb_final:latest
     restart: always
-    command: gunicorn api_yamdb.wsgi:application --bind 0.0.0.0:8000
-    ports:
-      - 8000:8000
     volumes:
-      - static_value:/var/static/
-      - media_value:/var/media/
+      - ./static_volume:/code/static
     depends_on:
       - db
     env_file:
       - ./.env
+
   nginx:
-    image: nginx:1.21.3-alpine
+    image: nginx:latest
     restart: always
-    ports:
-      - "80:80"
     volumes:
+      - ./static_volume:/code/static
       - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
-      - static_value:/var/html/static/
-      - media_value:/var/html/media/
+    ports:
+      - 80:80
     depends_on:
-      - web
+      - yamdb
