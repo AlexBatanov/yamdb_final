@@ -46,7 +46,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          tags: alexandrbatanov/yamdb_final
+          tags: alexandrbatanov/yamdb_final:latest
 
   deploy:
     runs-on: ubuntu-latest
@@ -75,7 +75,7 @@ jobs:
             cd ~
             cd ./code
             sudo docker-compose down
-            sudo docker pull alexandrbatanov/yamdb_final
+            sudo docker pull alexandrbatanov/yamdb_final:latest
             sudo docker-compose up -d
 
 
