@@ -50,29 +50,21 @@ jobs:
           tags: alexandrbatanov/yamdb_final:latest
 
   deploy:
+    runs-on: ubuntu-latest
+    needs: build_and_push_to_docker_hub
     steps:
-    - name: executing remote ssh commands to deploy
-      uses: appleboy/ssh-action@master
-      with:
+      - name: executing remote ssh commands to deploy
+        uses: appleboy/ssh-action@master
+        with:
         host: ${{ secrets.HOST }}
         username: ${{ secrets.USER }}
         key: ${{ secrets.SSH_KEY }}
         passphrase: ${{ secrets.PASSPHRASE }}
-        source: "./.env, nginx/default.conf, ./docker-compose.yaml"
-        target: "/home/yc-user/app"
-
-      - name: executing remote ssh commands to deploy
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USER }}
-          key: ${{ secrets.SSH_KEY }}
-          passphrase: ${{ secrets.PASSPHRASE }}
-          script: |
+        script: |
             cd ~
-            cd ./code
+            cd ./app/
             sudo docker-compose down
-            sudo docker pull alexandrbatanov/yamdb_final:latest
+            sudo docker pull mydockerid2505/yamdb_final:latest
             sudo docker-compose up -d
 
 
