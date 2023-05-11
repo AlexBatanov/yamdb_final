@@ -18,8 +18,8 @@ services:
     image: alexandrbatanov/yamdb_final:latest
     restart: always
     volumes:
-      - static_value:/app/static/
-      - media_value:/app/media/
+      - static_volume:/app/static/
+      - media_volume:/app/media/
     depends_on:
       - db
     env_file:
@@ -29,8 +29,8 @@ services:
     image: nginx:latest
     restart: always
     volumes:
-      - media_value:/var/html/media/
-      - static_value:/var/html/static/
+      - media_volume:/var/html/media/
+      - static_volume:/var/html/static/
       - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
     ports:
       - 80:80
