@@ -15,8 +15,7 @@ services:
     env_file:
       - ./.env
   yamdb:
-    #image: alexandrbatanov/yamdb_final:latest
-    build: .
+    image: alexandrbatanov/yamdb_final:latest
     restart: always
     volumes:
       - static_volume:/app/static/
