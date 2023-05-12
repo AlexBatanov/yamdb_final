@@ -47,7 +47,7 @@ jobs:
         with:
           push: true
           context: ./api_yamdb/
-          tags: alexandrbatanov/yamdb_final:latest
+          tags: ${{ secrets.DOCKER_USERNAME }}/yamdb_final:latest
 
   deploy:
     runs-on: ubuntu-latest
@@ -62,12 +62,17 @@ jobs:
           passphrase: ${{ secrets.PASSPHRASE }}
           script: |
             sudo systemctl stop nginx
-            cd ~
-            sudo docker-compose down
-            sudo docker pull mydockerid2505/yamdb_final:latest
-            # sudo docker-compose up -d
-            # sudo docker-compose exec web python manage.py migrate
-            # sudo docker-compose exec web python manage.py collectstatic --no-input
+            sudo docker-compose stop
+            sudo docker-compose rm yamdb
+            sudo docker pull ${{ secrets.DOCKER_USERNAME }}/yamdb_final:latest
+            touch .env
+            echo DB_ENGINE=${{ secrets.DB_ENGINE }} > .env
+            echo DB_NAME=${{ secrets.DB_NAME }} > .env
+            echo POSTGRES_USER=${{ secrets.POSTGRES_USER }} > .env
+            echo POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }} > .env
+            echo DB_HOST=${{ secrets.DB_HOST }} > .env
+            echo DB_PORT=${{ secrets.DB_PORT }} > .env
+            sudo docker-compose up -d
 
 
   send_message:
