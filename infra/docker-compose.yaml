@@ -10,9 +10,9 @@ services:
     env_file:
       - ./.env
   yamdb:
-    image: alexandrbatanov/yamdb_final:latest
     # build:
     #   context: ../api_yamdb/
+    image: alexandrbatanov/yamdb_final:latest
     restart: always
     volumes:
       - static_value:/static/
