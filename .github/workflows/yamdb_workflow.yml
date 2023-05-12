@@ -61,6 +61,7 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           passphrase: ${{ secrets.PASSPHRASE }}
           script: |
+            sudo systemctl stop nginx
             cd ~
             cd ./app/
             sudo docker-compose down
