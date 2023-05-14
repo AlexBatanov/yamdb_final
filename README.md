@@ -194,3 +194,5 @@ PUTCH http://localhost//api/v1/titles/{title_id}/reviews/{review_id}/
 ```
 ### Автор
 Александр Батанов
+
+запущенный проект http://84.201.160.139/redoc/
