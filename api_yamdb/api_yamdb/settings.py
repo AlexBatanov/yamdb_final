@@ -5,11 +5,10 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', default='default')
-# SECRET_KEY = 'default'
 
 DEBUG = False
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = os.getenv('HOST')
 
 INSTALLED_APPS = [
     'django.contrib.admin',
